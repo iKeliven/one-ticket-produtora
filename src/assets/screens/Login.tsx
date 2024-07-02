@@ -24,7 +24,7 @@ export default function Login() {
       <div className="flex flex-col gap-5 p-10 justify-center w-[50vw] items-center">
         <img src='./logo-black.png' className='w-[200px]'/>
         <Heading size='medium'>Login</Heading>
-        <Text size='medium'>Digite login e senha para entrar na página de administrador</Text>
+        <Text size='medium'>Digite login e senha para entrar na área de produtor</Text>
         <TextField
             className="w-[80%]"
           label="Login"
@@ -61,7 +61,7 @@ export default function Login() {
         <img
           className="w-[100%] object-cover"
           
-          src="https://images.pexels.com/photos/1047442/pexels-photo-1047442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          src="./banner-login.jpg"
           alt="Show"
         />
       </div>

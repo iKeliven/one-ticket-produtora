@@ -7,6 +7,7 @@ import ProximosEventos from "../components/ProximosEventos";
 import Atalhos from "../components/Atalhos";
 import Feedback from "../components/Feedback";
 import Tarefas from "../components/Tarefas";
+import Header from "../components/Header";
 
 // Dados de exemplo
 const avaliacoes = {
@@ -90,7 +91,12 @@ const Home: FunctionComponent = () => {
   return (
     <div className="flex flex-col w-[100vw]">
       <HeaderSection />
-      <div className="flex flex-col bg-[#e6e6e6] pt-[120px] gap-5 p-8 flex-grow">
+      <div className="flex pt-[96px] w-full">
+        <Header />
+      </div>
+      
+      <div className="flex flex-col bg-[#e6e6e6] gap-5 p-8 flex-grow">
+       
         <div className="flex gap-10">
           <DashData icone={<TrendingUpIcon sx={{ fontSize: 40 }} />} titulo={"Eventos Realizados"} dado={"250"} imagem={"Vector125.png"} />
           <DashData icone={<TrendingUpIcon sx={{ fontSize: 40 }} />} titulo={"Ingressos Vendidos"} dado={"2345"} imagem={"Growth.png"} />

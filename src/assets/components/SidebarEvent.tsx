@@ -16,18 +16,18 @@ export default function SidebarEvent() {
                 
               </SidebarItems>
             </Link>
-            <Link to="/estabelecimentos">
-            <SidebarItems label="Detalhes do Evento" active={location.pathname === '/estabelecimentos'}>
+            <Link to="/detalhe-evento">
+            <SidebarItems label="Detalhes do Evento" active={location.pathname === '/detalhe-evento'}>
               
             </SidebarItems>
             </Link>
-            <Link to="/produtoras">
-              <SidebarItems label="Ingressos e Lotes" active={location.pathname === '/produtoras'}>
+            <Link to="/ingressos">
+              <SidebarItems label="Ingressos e Lotes" active={location.pathname === '/ingressos'}>
                 
               </SidebarItems>
             </Link>
-            <Link to="/planos">
-            <SidebarItems label="Pontos de Venda" active={location.pathname === '/planos'}>
+            <Link to="/pontodevendas">
+            <SidebarItems label="Pontos de Venda" active={location.pathname === '/vendas'}>
               
             </SidebarItems></Link>
             <Link to="/colaboradores">
@@ -35,21 +35,21 @@ export default function SidebarEvent() {
               
             </SidebarItems></Link>
 
-            <Link to="/Check-in"><SidebarItems label="Usuários" active={location.pathname === '/usuarios'}>
+            <Link to="/checkin"><SidebarItems label="Check-in" active={location.pathname === '/checkin'}>
               
             </SidebarItems></Link>
-            <Link to="/clientes">
+            <Link to="/ingressos">
             <SidebarItems label="Troca de Ingressos" active={location.pathname === '/clientes'}>
               
             </SidebarItems></Link>
-            <Link to="/participante">
-              <SidebarItems label="Pedidos e participantes" active={location.pathname === '/participante'}>
+            <Link to="/participantes">
+              <SidebarItems label="Pedidos e participantes" active={location.pathname === '/participantes'}>
              
             </SidebarItems>
             </Link>
             
-            <Link to="/ajuda">
-              <SidebarItems label="Comunicados" active={location.pathname === '/ajuda'}>
+            <Link to="/comunicados">
+              <SidebarItems label="Comunicados" active={location.pathname === '/comunicados'}>
              
             </SidebarItems>
             </Link>

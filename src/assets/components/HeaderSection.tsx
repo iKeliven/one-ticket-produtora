@@ -6,7 +6,7 @@ export default function HeaderSection() {
   return (
     <div className="flex justify-between items-center fixed w-full top-0 py-5 px-10 bg-[#D9D9D9] z-50">
       <section className='flex flex-col'>
-        <img src="./logo-black.png" alt="OneTicket" className="h-7" />
+        <img src="./logo-black.png" alt="OneTicket" className="h-4" />
       </section>
       <section className="flex gap-5">
         <nav className="flex gap-5">

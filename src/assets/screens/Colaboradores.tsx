@@ -1,12 +1,13 @@
 import Footer from "../components/Footer";
-import HeaderPages from "../components/HeaderPages";
 import { DataGrid, GridPagination } from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
 import { DeleteOutline, DriveFileRenameOutline } from '@mui/icons-material';
-import ModalCadastroUsuario from "../modal/ModalCadastroUsuario";
 import React, { useState } from 'react';
 import SidebarEvent from "../components/SidebarEvent";
+import HeaderSection from "../components/HeaderSection";
+import { Heading } from "../components/Heading";
+import { Button } from "@mui/material";
 
 // Dados de exemplo para a tabela de usuários
 const rows = [
@@ -56,43 +57,44 @@ const columns = [
 ];
 
 export default function Colaboradores() {
-  
-    const [openModal, setOpenModal] = useState(false);
-  
-    const handleAddNovoClick = () => {
-      setOpenModal(true);
-    };
-  
-    const handleCloseModal = () => {
-      setOpenModal(false);
-    };
-  
 
-    
-    return (
-      <div className="flex flex-col w-[100vw] bg-[#e2e2e2]">
-        <div className="flex">
-            <SidebarEvent />
-            <div className=" w-[85vw]">
-                <Header />
-                <div className="flex flex-col bg-white flex-wrap shadow-md rounded-xl p-8 mx-8 mb-5 gap-9">
-                <HeaderPages titulo={"Colaboradores"} total={`${rows.length} usuários`} handleAddNovoClick={handleAddNovoClick} />
 
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        pagination
-                        pageSize={8}
-                        rowsPerPageOptions={[8, 16, 24]}
-                        checkboxSelection
-                        components={{ pagination: GridPagination }}
-                    />
-                </div>
+
+  return (
+    <div className="flex flex-col w-[100vw]">
+      <HeaderSection />
+      <div className="flex">
+        <SidebarEvent />
+        <div className="flex w-[75vw] flex-col bg-[#e6e6e6] pt-[120px] gap-5 p-8 flex-grow">
+          <div className="bg-white p-8 box-border gap-5 shadow-md rounded-xl">
+            <div className="flex justify-between pb-8">
+            <Heading size="large">Colaboradores</Heading>
+            <Button
+          variant="contained"
+          style={{ backgroundColor: '#FF9800', color: '#fff', border: '1px solid #FF9800', boxShadow: 'none' }}
+        >
+          Cadastrar Novo
+        </Button>
             </div>
-         </div>
+            <div className="flex">
+              <DataGrid
+              rows={rows}
+              columns={columns}
+              pagination
+              pageSize={8}
+              rowsPerPageOptions={[8, 16, 24]}
+              checkboxSelection
+              components={{ pagination: GridPagination }}
+            />
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
       <Footer />
-      <ModalCadastroUsuario open={openModal} handleClose={handleCloseModal} />
- 
+
     </div>
+
   );
 }
