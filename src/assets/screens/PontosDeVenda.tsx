@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, IconButton, Chip, Dialog, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, IconButton, Chip, Dialog, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import HeaderSection from "../components/HeaderSection";
 import Footer from "../components/Footer";
@@ -16,10 +16,20 @@ const pontosDeVenda = [
   { id: 5, nome: 'Ingressos Rápido', tipo: 'Online', status: 'Ativo', url: 'https://ingressosrapido.com' },
 ];
 
+interface PontoDeVenda {
+  id: number;
+  nome: string;
+  tipo: string;
+  status: string;
+  url?: string;
+  endereco?: string;
+}
+
 const PontosDeVenda: React.FunctionComponent = () => {
-  const [filtro, setFiltro] = useState("");
-  const [openDialog, setOpenDialog] = useState(false);
-  const [novoPonto, setNovoPonto] = useState({
+  const [filtro, setFiltro] = useState<string>("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [novoPonto, setNovoPonto] = useState<PontoDeVenda>({
+    id: 0,
     nome: '',
     tipo: '',
     status: 'Ativo',
@@ -27,7 +37,7 @@ const PontosDeVenda: React.FunctionComponent = () => {
     endereco: ''
   });
 
-  const handleFiltroChange = (event) => {
+  const handleFiltroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltro(event.target.value);
   };
 
@@ -39,16 +49,17 @@ const PontosDeVenda: React.FunctionComponent = () => {
     setOpenDialog(false);
   };
 
-  const handleNovoPontoChange = (event) => {
+  const handleNovoPontoChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const { name, value } = event.target;
     setNovoPonto({ ...novoPonto, [name]: value });
   };
 
   const handleAdicionarPonto = () => {
     if (novoPonto.nome && novoPonto.tipo) {
-      pontosDeVenda.push({ ...novoPonto, id: pontosDeVenda.length + 1 });
+      const newId = pontosDeVenda.length + 1;
+      pontosDeVenda.push({ ...novoPonto, id: newId });
       setOpenDialog(false);
-      setNovoPonto({ nome: '', tipo: '', status: 'Ativo', url: '', endereco: '' });
+      setNovoPonto({ id: 0, nome: '', tipo: '', status: 'Ativo', url: '', endereco: '' });
     }
   };
 

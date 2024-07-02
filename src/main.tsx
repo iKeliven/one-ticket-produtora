@@ -1,6 +1,3 @@
-import { createRoot } from 'react-dom/client'; // Importe createRoot corretamente
-
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './assets/screens/Home.tsx';
 import './index.css';
@@ -13,11 +10,11 @@ import Checkin from './assets/screens/Checkin.tsx';
 import Ingressos from './assets/screens/Ingressos.tsx';
 import Participantes from './assets/screens/Participantes.tsx';
 import DetalhesEvento from './assets/screens/DetalhesEvento.tsx';
-import PontosDeVenda from './assets/screens/PontosdeVenda.tsx';
+import PontosDeVenda from './assets/screens/PontosDeVenda.tsx';
 import App from './App.tsx';
 
-createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+export default function Main(){
+  return(
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
@@ -35,5 +32,8 @@ createRoot(document.getElementById('root')).render(
 
       </Routes>
     </Router>
-  </React.StrictMode>
-);
+  )
+}
+
+    
+
