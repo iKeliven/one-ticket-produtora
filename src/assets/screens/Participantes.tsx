@@ -76,73 +76,74 @@ export default function Participantes() {
               </Button>
             </div>
             <div className="flex gap-5 items-start justify-start">
-              
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pagination
-                  pageSize={8}
-                  rowsPerPageOptions={[8, 16, 24]}
-                  checkboxSelection
-                  components={{ Pagination: GridPagination }}
-                />
-              
-              <div className="w-[300px]">
-      <div className="flex items-center gap-2 ">
-        <FilterListIcon />
-        <h2 className="font-bold">Filtros</h2>
-      </div>
-      <div className="flex flex-col gap-4">
-        <TextField
-          label="De"
-          type="date"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          label="Até"
-          type="date"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField label="Cidade" select>
-          <MenuItem value="">
-            <em>-----</em>
-          </MenuItem>
-          <MenuItem value="Florianópolis - SC">Florianópolis - SC</MenuItem>
-          <MenuItem value="São Paulo - SP">São Paulo - SP</MenuItem>
-        </TextField>
-        <TextField label="Nome" />
-        <TextField label="Categoria" select>
-          <MenuItem value="">
-            <em>-----</em>
-          </MenuItem>
-          <MenuItem value="Concerto">Concerto</MenuItem>
-          <MenuItem value="Teatro">Teatro</MenuItem>
-        </TextField>
-        <div>
-          <h3 className="font-bold mb-2">Status</h3>
-          <Stack direction="row" spacing={1}>
-            <Chip
-              label="Encerrado"
-              color={status.includes('encerrado') ? 'primary' : 'default'}
-              onClick={() => handleStatusChange('encerrado')}
-            />
-            <Chip
-              label="Pendente"
-              color={status.includes('pendente') ? 'primary' : 'default'}
-              onClick={() => handleStatusChange('pendente')}
-            />
-            <Chip
-              label="Ativo"
-              color={status.includes('ativo') ? 'primary' : 'default'}
-              onClick={() => handleStatusChange('ativo')}
-            />
-          </Stack>
-        </div>
-        <Button variant="contained" style={{background: "#f97316", border: "none"}}>
-          Aplicar Filtros
-        </Button>
-      </div>
-    </div>
+
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pagination
+                pageSize={8}
+                rowsPerPageOptions={[8, 16, 24]}
+                checkboxSelection
+                components={{ Pagination: GridPagination }}
+              />
+
+              <div className="w-[300px] pl-6">
+                <div className="flex items-center gap-2 pb-5">
+                  <FilterListIcon />
+                  <Heading size="big">Filtros</Heading>
+
+                </div>
+                <div className="flex flex-col gap-4">
+                  <TextField
+                    label="De"
+                    type="date"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <TextField
+                    label="Até"
+                    type="date"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <TextField label="Cidade" select>
+                    <MenuItem value="">
+                      <em>-----</em>
+                    </MenuItem>
+                    <MenuItem value="Florianópolis - SC">Florianópolis - SC</MenuItem>
+                    <MenuItem value="São Paulo - SP">São Paulo - SP</MenuItem>
+                  </TextField>
+                  <TextField label="Nome" />
+                  <TextField label="Categoria" select>
+                    <MenuItem value="">
+                      <em>-----</em>
+                    </MenuItem>
+                    <MenuItem value="Concerto">Concerto</MenuItem>
+                    <MenuItem value="Teatro">Teatro</MenuItem>
+                  </TextField>
+                  <div>
+                    <h3 className="font-bold mb-2">Status</h3>
+                    <Stack direction="row" spacing={1}>
+                      <Chip
+                        label="Encerrado"
+                        color={status.includes('encerrado') ? 'primary' : 'default'}
+                        onClick={() => handleStatusChange('encerrado')}
+                      />
+                      <Chip
+                        label="Pendente"
+                        color={status.includes('pendente') ? 'primary' : 'default'}
+                        onClick={() => handleStatusChange('pendente')}
+                      />
+                      <Chip
+                        label="Ativo"
+                        color={status.includes('ativo') ? 'primary' : 'default'}
+                        onClick={() => handleStatusChange('ativo')}
+                      />
+                    </Stack>
+                  </div>
+                  <Button variant="contained" style={{ background: "#FF9800", border: "none", boxShadow: "none"}}>
+                    Aplicar Filtros
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

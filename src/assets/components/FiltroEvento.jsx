@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField, Button, Chip, Stack, MenuItem } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import {Heading} from './Heading'
 
 export default function FiltroEvento() {
   const [status, setStatus] = React.useState([]);
@@ -15,7 +16,7 @@ export default function FiltroEvento() {
     <div className="bg-white w-[300px] p-5 box-border gap-5 shadow-md rounded-xl">
       <div className="flex items-center gap-2 mb-4">
         <FilterListIcon />
-        <h2 className="font-bold">Filtros</h2>
+        <Heading size="big">Filtros</Heading>
       </div>
       <div className="flex flex-col gap-4">
         <TextField

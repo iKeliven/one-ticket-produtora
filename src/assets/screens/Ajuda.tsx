@@ -2,7 +2,6 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeaderPages from "../components/HeaderPages";
-import PlanoItem from "../components/PlanoItem";
 
 export default function Ajuda(){
 

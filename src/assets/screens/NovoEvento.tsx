@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios';
 import { TextField, Select, MenuItem, FormControl, InputLabel, Button, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import RoomIcon from '@mui/icons-material/Room';
@@ -11,6 +12,51 @@ import { Heading } from "../components/Heading";
 import { Text } from "../components/Text";
 
 const NovoEvento: React.FunctionComponent = () => {
+  const [cep, setCep] = useState('');
+  const [endereco, setEndereco] = useState({
+    logradouro: '',
+    bairro: '',
+    cidade: '',
+    uf: '',
+    numero: '',
+    complemento: ''
+  });
+
+  const handleCepChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setCep(value);
+
+    if (value.length === 8) { // Verifica se o CEP tem 8 dígitos
+      try {
+        const response = await axios.get(`https://viacep.com.br/ws/${value}/json/`);
+        if (response.data.erro) {
+          alert('CEP não encontrado');
+        } else {
+          setEndereco({
+            ...endereco,
+            logradouro: response.data.logradouro,
+            bairro: response.data.bairro,
+            cidade: response.data.localidade,
+            uf: response.data.uf,
+            numero: '',
+            complemento: ''
+          });
+        }
+      } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        alert('Erro ao buscar CEP');
+      }
+    }
+  };
+
+  const handleEnderecoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setEndereco({
+      ...endereco,
+      [name]: value
+    });
+  };
+
   return (
     <div className="flex flex-col w-[100vw]">
       <HeaderSection />
@@ -69,33 +115,36 @@ const NovoEvento: React.FunctionComponent = () => {
                 <IconButton size="small">
                   <EditIcon style={{ color: '#f97316' }} />
                 </IconButton>
-                <div className="flex flex-col w-full gap-1">
+                <div className="flex flex-col w-full gap-4">
                   <label>Formato do evento</label>
                   <div className="flex items-center gap-2 mb-4">
-                    <Button variant="contained" startIcon={<RoomIcon />} >
+                    <Button variant="contained" startIcon={<RoomIcon />}
+                      style={{ backgroundColor: '#FF9800', color: '#fff', border: 'none', boxShadow: 'none' }}>
                       Presencial
                     </Button>
-                    <Button variant="contained" startIcon={<WifiIcon />} >
+                    <Button variant="contained" startIcon={<WifiIcon />}
+                      style={{ backgroundColor: '#c2c2c2', color: '#fff', border: 'none', boxShadow: 'none' }}>
                       Evento On-line
                     </Button>
-                    <Button variant="contained" startIcon={<PhonelinkIcon />}>
+                    <Button variant="contained" startIcon={<PhonelinkIcon />}
+                      style={{ backgroundColor: '#c2c2c2', color: '#fff', border: 'none', boxShadow: 'none' }}>
                       Presencial + On-line
                     </Button>
                   </div>
                   <TextField fullWidth label="Nome do local" InputProps={{ endAdornment: <IconButton><EditIcon /></IconButton> }} />
-                  <TextField fullWidth label="Endereço" />
                   <div className="flex gap-4">
-                    <TextField label="CEP" fullWidth />
-                    <TextField label="Número" fullWidth />
+                    <TextField className="w-[40%]" label="CEP" value={cep} onChange={handleCepChange} />
+                    <TextField fullWidth label="Rua" name="logradouro" value={endereco.logradouro} onChange={handleEnderecoChange} />
                   </div>
                   <div className="flex gap-4">
-                    <TextField label="Cidade" fullWidth />
-                    <TextField label="UF" select fullWidth>
-                      <MenuItem value="">
-                        <em>--</em>
-                      </MenuItem>
-                      {/* Adicione mais opções conforme necessário */}
-                    </TextField>
+                    <TextField className="w-[40%]"  label="Número" name="numero" value={endereco.numero} onChange={handleEnderecoChange} />
+                    <TextField fullWidth label="Complemento" name="complemento" value={endereco.complemento} onChange={handleEnderecoChange} />
+                  </div>
+                  <div className="flex gap-4">
+                    <TextField fullWidth label="Bairro" name="bairro" value={endereco.bairro} onChange={handleEnderecoChange} />
+                    <TextField label="Cidade" name="cidade" fullWidth value={endereco.cidade} onChange={handleEnderecoChange} />
+                    <TextField label="Estado" name="uf" className="w-[40%]" value={endereco.uf} onChange={handleEnderecoChange} />
+
                   </div>
                 </div>
               </div>
@@ -116,6 +165,7 @@ const NovoEvento: React.FunctionComponent = () => {
                     <InputLabel>Sem mapa</InputLabel>
                     <Select label="Sem mapa">
                       {/* Adicione mais opções conforme necessário */}
+                      
                     </Select>
                   </FormControl>
                 </div>
@@ -192,9 +242,9 @@ const NovoEvento: React.FunctionComponent = () => {
             </div>
 
             <div className="flex gap-4 mt-6">
-              <Button variant="contained">Capa</Button>
-              <Button variant="contained">Galeria</Button>
-              <Button variant="contained">Mapa do local</Button>
+              <Button variant="contained" style={{ backgroundColor: '#FF9800', color: '#fff', border: 'none', boxShadow: 'none' }}>Capa</Button>
+              <Button variant="contained" style={{ backgroundColor: '#c2c2c2', color: '#fff', border: 'none', boxShadow: 'none' }}>Galeria</Button>
+              <Button variant="contained" style={{ backgroundColor: '#c2c2c2', color: '#fff', border: 'none', boxShadow: 'none' }}>Mapa do local</Button>
             </div>
 
             <div className="mt-6">
@@ -212,9 +262,9 @@ const NovoEvento: React.FunctionComponent = () => {
                 <img src="./thumbnail.png" alt="Imagem do Evento" className="w-24 h-24 rounded-lg" />
               </div>
             </div>
-            <Button variant="contained" 
-               style={{ backgroundColor: '#FF9800', color: '#fff', border: '1px solid #FF9800', boxShadow: 'none' }}
-              >Cadastrar Evento</Button>
+            <Button variant="contained"
+              style={{ backgroundColor: '#FF9800', color: '#fff', border: '1px solid #FF9800', boxShadow: 'none' }}
+            >Cadastrar Evento</Button>
           </div>
         </div>
       </div>

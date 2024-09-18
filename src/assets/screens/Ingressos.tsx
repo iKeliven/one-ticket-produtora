@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, IconButton, Select, MenuItem, Chip, Stack, Collapse, Card, CardContent } from '@mui/material';
+import { TextField, Button, IconButton, Select, MenuItem, Chip, Stack, Collapse, Card, CardContent, Menu } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -13,6 +13,8 @@ import { Text } from "../components/Text";
 const Ingresso: React.FunctionComponent = () => {
   const [openPista, setOpenPista] = useState(false);
   const [openCamarote, setOpenCamarote] = useState(false);
+  const [anchorElPista, setAnchorElPista] = useState<null | HTMLElement>(null);
+  const [anchorElCamarote, setAnchorElCamarote] = useState<null | HTMLElement>(null);
 
   const togglePista = () => {
     setOpenPista(!openPista);
@@ -20,6 +22,22 @@ const Ingresso: React.FunctionComponent = () => {
 
   const toggleCamarote = () => {
     setOpenCamarote(!openCamarote);
+  };
+
+  const handleClickPista = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElPista(event.currentTarget);
+  };
+
+  const handleClickCamarote = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElCamarote(event.currentTarget);
+  };
+
+  const handleClosePista = () => {
+    setAnchorElPista(null);
+  };
+
+  const handleCloseCamarote = () => {
+    setAnchorElCamarote(null);
   };
 
   return (
@@ -58,100 +76,111 @@ const Ingresso: React.FunctionComponent = () => {
                 <div className="flex-grow">
                   <TextField fullWidth defaultValue="LOTE 1" />
                 </div>
-                <IconButton size="small">
+                <IconButton size="small" onClick={handleClickPista}>
                   <SettingsIcon style={{ color: '#f97316' }} />
                 </IconButton>
-                <Chip label="ativo" color="success" className="w-[200px]" />
+                <Menu
+                  anchorEl={anchorElPista}
+                  open={Boolean(anchorElPista)}
+                  onClose={handleClosePista}
+                >
+                  <MenuItem onClick={handleClosePista}>Desativar</MenuItem>
+                  <MenuItem onClick={handleClosePista}>Editar</MenuItem>
+                </Menu>
+                <Chip label="ativo" color="success" className="w-[250px]" />
                 <IconButton onClick={togglePista}>
                   {openPista ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
               </div>
               <Collapse in={openPista}>
-                <Card className="mt-4">
-                  <CardContent>
-                    <div className="flex flex-col w-full gap-4">
-                      <div className="flex items-center justify-between">
-                        <Heading size="small">Lote 1</Heading>
-                        <Text size="medium">100un</Text>
+                <div className="flex gap-4 mt-4">
+                  <Card className="flex w-[40vw]">
+                    <CardContent>
+                      <div className="flex flex-col w-full gap-4">
+                        <div className="flex items-center gap-5">
+                          <Heading size="small">Lote 1</Heading>
+                          <Text size="medium">|</Text>
+                          <Text size="medium">100un</Text>
+                        </div>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Inteira" color="success" className="w-[250px]" />
+                          <Select defaultValue="R$ 100,00" className="w-[20vw]">
+                            <MenuItem value="R$ 100,00">R$ 100,00</MenuItem>
+                            <MenuItem value="R$ 120,00">R$ 120,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="50" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Meia-entrada" color="success" className="w-[250px]" />
+                          <Select defaultValue="R$ 50,00" className="w-[20vw]">
+                            <MenuItem value="R$ 50,00">R$ 50,00</MenuItem>
+                            <MenuItem value="R$ 60,00">R$ 60,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="30" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Bônus" color="warning" className="w-[250px]" />
+                          <Select defaultValue="R$ 0,00" className="w-[20vw]">
+                            <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="20" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
                       </div>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Inteira" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 100,00" className="w-[30vw]">
-                          <MenuItem value="R$ 100,00">R$ 100,00</MenuItem>
-                          <MenuItem value="R$ 120,00">R$ 120,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="50" />
-                          <Text size="medium">/ 100</Text>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex w-[40vw]">
+                    <CardContent>
+                      <div className="flex flex-col w-full gap-4">
+                      <div className="flex items-center gap-5">
+                          <Heading size="small">Lote 2</Heading>
+                          <Text size="medium">|</Text>
+                          <Text size="medium">100un</Text>
                         </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Meia-entrada" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 50,00" className="w-[30vw]">
-                          <MenuItem value="R$ 50,00">R$ 50,00</MenuItem>
-                          <MenuItem value="R$ 60,00">R$ 60,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="30" />
-                          <Text size="medium">/ 100</Text>
-                        </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Bônus" color="warning" className="w-[200px]" />
-                        <Select defaultValue="R$ 0,00" className="w-[30vw]">
-                          <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="20" />
-                          <Text size="medium">/ 100</Text>
-                        </div>
-                      </Stack>
-                    </div>
-                  </CardContent>
-                </Card>
-                {/* Adicionando o segundo lote para Pista */}
-                <Card className="mt-4">
-                  <CardContent>
-                    <div className="flex flex-col w-full gap-4">
-                      <div className="flex items-center justify-between">
-                        <Heading size="small">Lote 2</Heading>
-                        <Text size="medium">200un</Text>
+                        <Stack direction="row" spacing={2}>
+                          
+                          <Select defaultValue="R$ 150,00" className="w-[20vw]">
+                            <MenuItem value="R$ 150,00">R$ 150,00</MenuItem>
+                            <MenuItem value="R$ 180,00">R$ 180,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="100" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          
+                          <Select defaultValue="R$ 75,00" className="w-[20vw]">
+                            <MenuItem value="R$ 75,00">R$ 75,00</MenuItem>
+                            <MenuItem value="R$ 90,00">R$ 90,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="60" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          
+                          <Select defaultValue="R$ 0,00" className="w-[20vw]">
+                            <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="40" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
                       </div>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Inteira" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 150,00" className="w-[30vw]">
-                          <MenuItem value="R$ 150,00">R$ 150,00</MenuItem>
-                          <MenuItem value="R$ 180,00">R$ 180,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="100" />
-                          <Text size="medium">/ 200</Text>
-                        </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Meia-entrada" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 75,00" className="w-[30vw]">
-                          <MenuItem value="R$ 75,00">R$ 75,00</MenuItem>
-                          <MenuItem value="R$ 90,00">R$ 90,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="60" />
-                          <Text size="medium">/ 200</Text>
-                        </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Bônus" color="warning" className="w-[200px]" />
-                        <Select defaultValue="R$ 0,00" className="w-[30vw]">
-                          <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="40" />
-                          <Text size="medium">/ 200</Text>
-                        </div>
-                      </Stack>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </Collapse>
             </div>
 
@@ -182,57 +211,111 @@ const Ingresso: React.FunctionComponent = () => {
                 <div className="flex-grow">
                   <TextField fullWidth defaultValue="LOTE 1" />
                 </div>
-                <IconButton size="small">
+                <IconButton size="small" onClick={handleClickCamarote}>
                   <SettingsIcon style={{ color: '#f97316' }} />
                 </IconButton>
-                <Chip label="ativo" color="success" className="w-[200px]" />
+                <Menu
+                  anchorEl={anchorElCamarote}
+                  open={Boolean(anchorElCamarote)}
+                  onClose={handleCloseCamarote}
+                >
+                  <MenuItem onClick={handleCloseCamarote}>Desativar</MenuItem>
+                  <MenuItem onClick={handleCloseCamarote}>Editar</MenuItem>
+                </Menu>
+                <Chip label="ativo" color="success" className="w-[250px]" />
                 <IconButton onClick={toggleCamarote}>
                   {openCamarote ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </IconButton>
               </div>
               <Collapse in={openCamarote}>
-                <Card className="mt-4">
-                  <CardContent>
-                    <div className="flex flex-col w-full gap-4">
-                      <div className="flex items-center justify-between">
-                        <Heading size="small">Lote 1</Heading>
-                        <Text size="medium">100un</Text>
+                <div className="flex gap-4 mt-2">
+                  <Card className="flex w-[40vw]">
+                    <CardContent>
+                      <div className="flex flex-col  gap-4">
+                        <div className="flex items-center gap-5">
+                          <Heading size="small">Lote 1</Heading>
+                          <Text size="medium">|</Text>
+                          <Text size="medium">100un</Text>
+                        </div>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Inteira" color="success" className="w-[250px]" />
+                          <Select defaultValue="R$ 200,00" className="w-[20vw]">
+                            <MenuItem value="R$ 200,00">R$ 200,00</MenuItem>
+                            <MenuItem value="R$ 240,00">R$ 240,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="50" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Meia-entrada" color="success" className="w-[250px]" />
+                          <Select defaultValue="R$ 100,00" className="w-[20vw]">
+                            <MenuItem value="R$ 100,00">R$ 100,00</MenuItem>
+                            <MenuItem value="R$ 120,00">R$ 120,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="30" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          <Chip label="Bônus" color="warning" className="w-[250px]" />
+                          <Select defaultValue="R$ 0,00" className="w-[20vw]">
+                            <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="20" />
+                            <Text size="medium">/ 100</Text>
+                          </div>
+                        </Stack>
                       </div>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Inteira" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 200,00" className="w-[30vw]">
-                          <MenuItem value="R$ 200,00">R$ 200,00</MenuItem>
-                          <MenuItem value="R$ 240,00">R$ 240,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="50" />
-                          <Text size="medium">/ 100</Text>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex w-[30vw]">
+                    <CardContent>
+                      <div className="flex flex-col w-full gap-4">
+                      <div className="flex items-center gap-5">
+                          <Heading size="small">Lote 2</Heading>
+                          <Text size="medium">|</Text>
+                          <Text size="medium">100un</Text>
                         </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Meia-entrada" color="success" className="w-[200px]" />
-                        <Select defaultValue="R$ 100,00" className="w-[30vw]">
-                          <MenuItem value="R$ 100,00">R$ 100,00</MenuItem>
-                          <MenuItem value="R$ 120,00">R$ 120,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="30" />
-                          <Text size="medium">/ 100</Text>
-                        </div>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <Chip label="Bônus" color="warning" className="w-[200px]" />
-                        <Select defaultValue="R$ 0,00" className="w-[30vw]">
-                          <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
-                        </Select>
-                        <div className="flex items-center w-full">
-                          <TextField defaultValue="20" />
-                          <Text size="medium">/ 100</Text>
-                        </div>
-                      </Stack>
-                    </div>
-                  </CardContent>
-                </Card>
+                        <Stack direction="row" spacing={2}>
+                          
+                          <Select defaultValue="R$ 300,00" className="w-[20vw]">
+                            <MenuItem value="R$ 300,00">R$ 300,00</MenuItem>
+                            <MenuItem value="R$ 350,00">R$ 350,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="100" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                          
+                          <Select defaultValue="R$ 150,00" className="w-[20vw]">
+                            <MenuItem value="R$ 150,00">R$ 150,00</MenuItem>
+                            <MenuItem value="R$ 175,00">R$ 175,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="60" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+            
+                          <Select defaultValue="R$ 0,00" className="w-[20vw]">
+                            <MenuItem value="R$ 0,00">R$ 0,00</MenuItem>
+                          </Select>
+                          <div className="flex items-center w-full">
+                            <TextField defaultValue="40" />
+                            <Text size="medium">/ 200</Text>
+                          </div>
+                        </Stack>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </Collapse>
             </div>
           </div>
